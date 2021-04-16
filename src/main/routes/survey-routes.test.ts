@@ -58,7 +58,6 @@ describe('Login Routes', () => {
           accessToken
         }
       })
-      console.log(await accountCollection.findOne({ _id: id }))
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -73,6 +72,14 @@ describe('Login Routes', () => {
           }]
         })
         .expect(204)
+    })
+  })
+
+  describe('GET /surveys', () => {
+    test('Should return 403 on load survey without accessToken', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .expect(403)
     })
   })
 })
